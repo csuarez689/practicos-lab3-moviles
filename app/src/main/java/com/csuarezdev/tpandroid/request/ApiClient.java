@@ -1,55 +1,56 @@
 package com.csuarezdev.tpandroid.request;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.csuarezdev.tpandroid.models.Usuario;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public class ApiClient {
-    private static SharedPreferences sp;
-
-    private static SharedPreferences conectar(Context context) {
-        if (sp == null)
-            sp = context.getSharedPreferences("datos", 0);
-        return sp;
-    }
-
     public static void guardar(Context context, Usuario usuario) {
-        SharedPreferences.Editor editor = conectar(context).edit();
-        editor.putLong("dni", usuario.getDni());
-        editor.putString("apellido", usuario.getApellido());
-        editor.putString("nombre", usuario.getNombre());
-        editor.putString("email", usuario.getEmail());
-        editor.putString("password", usuario.getPassword());
-        editor.commit();
+        try {
+            File file = new File(context.getFilesDir(), "usuarios.dat");
+            FileOutputStream fos = new FileOutputStream(file, false);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(usuario);
+            oos.flush();
+            oos.close();
+            fos.close();
+        } catch (IOException e) {
+            Toast.makeText(context, "No se pudo acceder al archivo", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static Usuario leer(Context context) {
         Usuario usuario = null;
-        SharedPreferences sp = conectar(context);
-        usuario = new Usuario(sp.getLong("dni", -1)
-                , sp.getString("apellido", "-1"),
-                sp.getString("nombre", "-1"),
-                sp.getString("email", "-1"),
-                sp.getString("password", "-1"));
+
+        try {
+            File archivo = new File(context.getFilesDir(), "usuarios.dat");
+            FileInputStream fis = new FileInputStream(archivo);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            usuario = (Usuario) ois.readObject();
+            ois.close();
+            fis.close();
+        } catch (IOException  | ClassNotFoundException e) {
+            Toast.makeText(context, "No se pudo acceder al archivo", Toast.LENGTH_SHORT).show();
+        }
         return usuario;
     }
 
     public static Usuario login(Context context, String email, String password) {
-        Usuario usuario = null;
-        SharedPreferences sp = conectar(context);
-
-        String email2 = sp.getString("email", "-1");
-        String password2 = sp.getString("password", "-1");
-
-        if (email.equals(email2) && password.equals(password2)) {
-            usuario = new Usuario(sp.getLong("dni", -1)
-                    , sp.getString("apellido", "-1"),
-                    sp.getString("nombre", "-1"),
-                    email2,
-                    password2);
+        Usuario usuario = leer(context);
+        if (usuario != null && usuario.getEmail().equals(email) && usuario.getPassword().equals(password)) {
+            return usuario;
         }
-        return usuario;
+        return null;
 
     }
+
+
 }

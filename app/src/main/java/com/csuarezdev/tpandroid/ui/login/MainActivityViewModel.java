@@ -27,7 +27,9 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public void login(String email, String password) {
         if (email.length() > 0 && password.length() > 0) {
-            Usuario usuario = apiClient.login(context, email, password);
+            Usuario usuario = null;
+                usuario = apiClient.login(context, email, password);
+
             if (usuario != null) {
                 Intent intent=new Intent(context, RegisterActivity.class);
                 intent.putExtra("logged", true);
