@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">TPAndroid</string>
+    <string name="guardar">Guardar</string>
+    <string name="apellido">Apellido</string>
+    <string name="dni">DNI</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="nombre">Nombre</string>
+    <string name="datos_usuario">Datos Usuario</string>
 </resources>
