@@ -6,4 +6,5 @@
     <string name="contraseña">Contraseña</string>
     <string name="nombre">Nombre</string>
     <string name="datos_usuario">Datos Usuario</string>
+    <string name="tomar_foto">Tomar Foto</string>
 </resources>

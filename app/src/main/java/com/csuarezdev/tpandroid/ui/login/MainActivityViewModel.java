@@ -1,6 +1,7 @@
 package com.csuarezdev.tpandroid.ui.login;
 
 
+
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import androidx.lifecycle.AndroidViewModel;
 import com.csuarezdev.tpandroid.models.Usuario;
 import com.csuarezdev.tpandroid.request.ApiClient;
 import com.csuarezdev.tpandroid.ui.register.RegisterActivity;
+
 
 public class MainActivityViewModel extends AndroidViewModel {
     private final Context context;

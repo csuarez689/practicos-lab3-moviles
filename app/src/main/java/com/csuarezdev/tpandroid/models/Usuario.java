@@ -1,5 +1,7 @@
 package com.csuarezdev.tpandroid.models;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 
 public class Usuario implements Serializable {
@@ -8,6 +10,7 @@ public class Usuario implements Serializable {
     private String nombre;
     private String email;
     private String password;
+    private String foto;
 
     public Usuario(long dni, String apellido, String nombre, String email, String password) {
 
@@ -16,6 +19,7 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
         this.email = email;
         this.password = password;
+        this.foto= "foto.png";
     }
 
     public long getDni() {
